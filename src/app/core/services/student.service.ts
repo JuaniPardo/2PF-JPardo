@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {delay, Observable, of, throwError} from "rxjs";
 import {Student} from "../models/student";
+import {rndTime} from "../../shared/utils";
 
 let STUDENTS_DB: Student[] = [
   {
@@ -104,26 +105,26 @@ export class StudentsService {
   }
 
   getStudents(): Observable<Student[]> {
-    return of(STUDENTS_DB).pipe(delay(this.rndTime()));
+    return of(STUDENTS_DB).pipe(delay(rndTime()));
   }
 
   getActiveStudents(): Observable<Student[]> {
     STUDENTS_DB = STUDENTS_DB.filter(s => s.isActive);
-    return of(STUDENTS_DB).pipe(delay(this.rndTime()));
+    return of(STUDENTS_DB).pipe(delay(rndTime()));
   }
 
   deleteStudent(id: number): Observable<Student[]> {
     STUDENTS_DB = STUDENTS_DB.map(s =>
       s.id === id ? {...s, isActive: false, updatedAt: new Date()} : s
     ).filter(s => s.isActive);
-    return of(STUDENTS_DB).pipe(delay(this.rndTime(.3)));
+    return of(STUDENTS_DB).pipe(delay(rndTime(.3)));
   }
 
   updateStudent(id: number, result: Partial<Student>): Observable<Student[]> {
     STUDENTS_DB = STUDENTS_DB.map(s =>
       s.id === id ? {...s, ...result, updatedAt: new Date()} : s
     ).filter(s => s.isActive);
-    return of(STUDENTS_DB).pipe(delay(this.rndTime(.5)));
+    return of(STUDENTS_DB).pipe(delay(rndTime(.5)));
   }
 
   addStudent(result: Student): Observable<Student[]> {
@@ -136,29 +137,25 @@ export class StudentsService {
       updatedAt: new Date()
     };
     STUDENTS_DB = [...STUDENTS_DB, newStudent];
-    return of(STUDENTS_DB).pipe(delay(this.rndTime(.7)));
-  }
-
-  private rndTime(maxSeconds: number = 1): number {
-    return Math.floor(Math.random() * maxSeconds * 1000);
+    return of(STUDENTS_DB).pipe(delay(rndTime(.7)));
   }
 
   activateStudent(id: number): Observable<Student[]> {
     STUDENTS_DB = STUDENTS_DB.map(s =>
       s.id === id ? {...s, isActive: true, updatedAt: new Date()} : s
     ).filter(s => !s.isActive);
-    return of(STUDENTS_DB).pipe(delay(this.rndTime(.5)));
+    return of(STUDENTS_DB).pipe(delay(rndTime(.5)));
   }
 
   getInactiveStudents(): Observable<Student[]> {
     STUDENTS_DB = STUDENTS_DB.filter(s => !s.isActive);
-    return of(STUDENTS_DB).pipe(delay(this.rndTime()));
+    return of(STUDENTS_DB).pipe(delay(rndTime()));
   }
 
   getStudentById(id: number): Observable<Student> {
     const student: Student | undefined = STUDENTS_DB.find(s => s.id === id);
     if (student) {
-      return of(student).pipe(delay(this.rndTime()));
+      return of(student).pipe(delay(rndTime()));
     } else {
       return  throwError(() => new Error('Alumno no encontrado'));
     }

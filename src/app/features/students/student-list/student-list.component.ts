@@ -11,7 +11,7 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
-  styleUrl: './student-list.component.scss'
+  styleUrls: ['./student-list.component.scss', '../../../shared/styles/lists.scss']
 })
 
 export class StudentListComponent implements OnInit, AfterViewInit {
