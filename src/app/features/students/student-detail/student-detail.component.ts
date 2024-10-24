@@ -6,7 +6,7 @@ import {StudentsService} from "../../../core/services/student.service";
 @Component({
   selector: 'app-student-detail',
   templateUrl: './student-detail.component.html',
-  styleUrls: ['./student-detail.component.scss'],
+  styleUrls: ['./student-detail.component.scss', '../../../shared/styles/details.scss'],
 })
 export class StudentDetailComponent {
   studentID!: number;
@@ -42,7 +42,7 @@ export class StudentDetailComponent {
     });
   }
 
-  goBack() {
+  goBack(): void {
     // Redireccionar al listado de estudiantes.
     this.router.navigate(['/students']).then();
   }

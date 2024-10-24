@@ -6,7 +6,7 @@ import {Student} from "../../../core/models/student";
 @Component({
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
-  styleUrl: './student-form.component.scss'
+  styleUrls: ['./student-form.component.scss', '../../../shared/styles/dialog-form.scss']
 })
 
 export class StudentFormComponent {

@@ -7,7 +7,7 @@ let COURSES_DB: Course[] = [
   {
     id: 1,
     name: 'Angular',
-    description: 'Desarrollo de aplicaciones web con Angular.r',
+    description: 'Desarrollo de aplicaciones web con Angular.',
     isActive: true,
     createdAt: new Date('2023-08-15'),
     updatedAt: new Date('2023-09-10')
