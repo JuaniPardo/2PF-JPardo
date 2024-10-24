@@ -13,6 +13,7 @@
           <mat-card-title>{{ course.name }}</mat-card-title>
           <mat-card-subtitle>
             <mat-chip-listbox>
+              <!-- No andan los colores. -->
               <mat-chip [ngClass]="course.isActive ? 'green-chip' : 'red-chip'">
                 {{ course.isActive ? 'Activo' : 'Inactivo' }}
               </mat-chip>
