@@ -17,6 +17,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import { ClassDetailComponent } from './class-detail/class-detail.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -25,21 +26,22 @@ import { ClassDetailComponent } from './class-detail/class-detail.component';
     ClassFormComponent,
     ClassDetailComponent
   ],
-  imports: [
-    CommonModule,
-    ClassesRoutingModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatCardModule,
-    MatInputModule
-  ]
+    imports: [
+        CommonModule,
+        ClassesRoutingModule,
+        MatProgressSpinnerModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDialogModule,
+        MatCardModule,
+        MatInputModule,
+        ReactiveFormsModule
+    ]
 })
 export class ClassesModule {
 }

@@ -6,4 +6,5 @@ export interface Class {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  courseName?: string;
 }
