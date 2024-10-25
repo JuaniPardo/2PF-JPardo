@@ -40,6 +40,8 @@ mat-list-item {
 }
 
 mat-card-actions {
+  display: flex;
+  justify-content: space-between;
   padding: 16px;
 }
 

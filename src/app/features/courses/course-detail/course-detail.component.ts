@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Course} from "../../../core/models/course";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "../../../core/services/course.service";
@@ -8,7 +8,7 @@ import {CourseService} from "../../../core/services/course.service";
   templateUrl: './course-detail.component.html',
   styleUrls: ['./course-detail.component.scss', '../../../shared/styles/details.scss'],
 })
-export class CourseDetailComponent {
+export class CourseDetailComponent implements OnInit {
   courseID!: number;
   course!: Course;
   isLoading: boolean = false;
@@ -47,4 +47,8 @@ export class CourseDetailComponent {
     this.router.navigate(['/courses']).then();
   }
 
+  goToClasses() {
+    // Redireccionar a la lista de clases.
+    this.router.navigate(['/courses',this.course.id,'classes']).then();
+  }
 }

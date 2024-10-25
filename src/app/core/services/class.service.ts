@@ -49,6 +49,24 @@ let CLASSES_DB: Class[] = [
     createdAt: new Date('2023-02-02'),
     updatedAt: new Date('2023-02-05'),
   },
+  {
+    id: 6,
+    title: 'Clase 1: Introducción a React',
+    description: 'Creación de componentes y aplicación de React.',
+    courseId: 2,
+    isActive: true,
+    createdAt: new Date('2023-02-02'),
+    updatedAt: new Date('2023-02-05'),
+  },
+  {
+    id: 7,
+    title: 'Clase 2: Componentes de React',
+    description: 'Creación de componentes de React.',
+    courseId: 2,
+    isActive: true,
+    createdAt: new Date('2023-02-02'),
+    updatedAt: new Date('2023-02-05'),
+  },
 ];
 
 @Injectable({
@@ -58,11 +76,17 @@ export class ClassService {
   constructor() {
   }
 
-  getActiveClasses(): Observable<Class[]> {
+  getActiveClasses(courseID: number): Observable<Class[]> {
+    if (courseID) {
+      return of(CLASSES_DB.filter(c => c.courseId === courseID && c.isActive));
+    }
     return of((CLASSES_DB).filter(c => c.isActive));
   }
 
-  getInactiveClasses(): Observable<Class[]> {
+  getInactiveClasses(courseID: number): Observable<Class[]> {
+    if (courseID) {
+      return of(CLASSES_DB.filter(c => c.courseId === courseID && !c.isActive));
+    }
     return of(CLASSES_DB.filter(c => !c.isActive));
   }
 
@@ -107,6 +131,11 @@ export class ClassService {
       c.id === id ? {...c, isActive: true, updatedAt: new Date()} : c
     ).filter(c => !c.isActive);
     return of(CLASSES_DB).pipe(delay(rndTime(.5)));
+  }
+
+  getClassesByCourseId(courseId: number): Observable<Class[]> {
+    const classes: Class[] = CLASSES_DB.filter(c => c.courseId === courseId);
+    return of(classes).pipe(delay(rndTime()));
   }
 
 }

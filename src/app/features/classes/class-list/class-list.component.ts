@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute,} from "@angular/router";
+
 import {Class} from '../../../core/models/class';
 import {ClassFormComponent} from '../class-form/class-form.component';
 import {ClassService} from '../../../core/services/class.service';
@@ -26,8 +28,10 @@ export class ClassListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  private courseID!: number;
 
   constructor(
+    private route: ActivatedRoute,
     private classesService: ClassService,
     private courseService: CourseService,
     private dialog: MatDialog
@@ -40,10 +44,13 @@ export class ClassListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadCourses();     // <-- Me aseguro de obtener primero los Cursos.
+    this.route.params.subscribe((params) => {
+      this.courseID = +params['id'];
+      this.loadCourses(this.courseID);     // <-- Me aseguro de obtener primero los Cursos.
+    });
   }
 
-  private loadCourses() {
+  private loadCourses(id?: number) {
     this.courseService.getActiveCourses().subscribe({
       next: (courses) => {
         this.courses = courses;
@@ -58,7 +65,7 @@ export class ClassListComponent implements OnInit, AfterViewInit {
   private loadClasses() {
     this.isLoading = true;
     if (this.showInactive) {
-      this.classesService.getInactiveClasses().subscribe({
+      this.classesService.getInactiveClasses(this.courseID).subscribe({
         next: (classes) => {
           this.mapCoursesNames(classes);    // <-- Mapea los nombres de los cursos.
           this.dataSource.paginator = this.paginator;
@@ -70,8 +77,8 @@ export class ClassListComponent implements OnInit, AfterViewInit {
           this.isLoading = false;
         },
       });
-      } else {
-      this.classesService.getActiveClasses().subscribe({
+    } else {
+      this.classesService.getActiveClasses(this.courseID).subscribe({
         next: (classes) => {
           this.mapCoursesNames(classes);    // <-- Mapea los nombres de los cursos.
           this.dataSource.paginator = this.paginator;
@@ -102,7 +109,7 @@ export class ClassListComponent implements OnInit, AfterViewInit {
       disableClose: false
     });
     dialogRef.afterClosed().subscribe({
-      next: (result) => {
+      next: (result): void => {
         if (!!result) {
           if (c) {
             this.updateClass(c.id, result);
@@ -138,7 +145,7 @@ export class ClassListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteClass(row: { id: number; }) {
+  deleteClass(row: { id: number; }): void {
     this.isLoading = true;
     this.classesService.deleteClass(row.id).subscribe({
       next: (dataClasses) => {
@@ -150,7 +157,7 @@ export class ClassListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  toggleInactive($event: MatSlideToggleChange) {
+  toggleInactive($event: MatSlideToggleChange): void {
     this.showInactive = $event.checked;
     this.loadClasses();
   }
@@ -160,12 +167,12 @@ export class ClassListComponent implements OnInit, AfterViewInit {
     this.courses.forEach(course => {
       courseMap.set(course.id, course.name);
     });
-    this.dataSource.data = classes.map((classsItem) => ({
+    this.dataSource.data = classes.map((classsItem): Class => ({
         ...classsItem,
         courseName: courseMap.get(classsItem.courseId) || 'Sin Curso'
       }
     ));
-    }
+  }
 
 }
 

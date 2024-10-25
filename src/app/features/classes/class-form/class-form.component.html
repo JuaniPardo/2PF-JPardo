@@ -16,6 +16,18 @@
         <mat-error>Descripcion es requerido</mat-error>
       }
     </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Curso</mat-label>
+      <mat-select formControlName="course">
+        <mat-option *ngFor="let course of courses" [value]="course.id">
+          {{ course.name }}
+        </mat-option>
+      </mat-select>
+      @if (classForm.get('course')?.invalid) {
+        <mat-error>Curso es requerido</mat-error>
+      }
+    </mat-form-field>
   </form>
 </div>
 <div class="actions" mat-dialog-actions>

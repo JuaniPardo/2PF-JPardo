@@ -1,19 +1,24 @@
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Class } from '../../../core/models/class';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup,} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import {Class} from '../../../core/models/class';
+import {Course} from '../../../core/models/course';
+import {CourseService} from '../../../core/services/course.service';
 
 @Component({
   selector: 'app-class-form',
   templateUrl: './class-form.component.html',
   styleUrls: ['./class-form.component.scss', '../../../shared/styles/dialog-form.scss']
 })
-export class ClassFormComponent {
+export class ClassFormComponent implements OnInit {
   classForm: FormGroup;
+  courses: Course[] = [];
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ClassFormComponent>,
+    private courseService: CourseService,
     @Inject(MAT_DIALOG_DATA) public data: Class | null
   ) {
     this.classForm = this.fb.group({
@@ -33,5 +38,20 @@ export class ClassFormComponent {
 
   close() {
     this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+    this.loadCourses();
+  }
+
+  private loadCourses() {
+    this.courseService.getActiveCourses().subscribe({
+      next: (courses) => {
+        this.courses = courses.sort((a, b) => a.name.localeCompare(b.name));
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }
