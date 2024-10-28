@@ -44,6 +44,17 @@
               <span matListItemLine>{{ student.updatedAt | date:'medium' }}</span>
             </mat-list-item>
           </mat-list>
+          <div>
+            <h3>Cursos Inscritos</h3>
+            <mat-list *ngIf="enrollments && enrollments.length > 0; else noEnrollments">
+              <mat-list-item *ngFor="let enrollment of enrollments">
+                <span>{{enrollment.courseName}}</span> -  <span>{{ enrollment.enrollmentDate | date:'mediumDate' }}</span>
+              </mat-list-item>
+            </mat-list>
+            <ng-template #noEnrollments>
+              <p>El estudiante no está inscrito en ningún curso.</p>
+            </ng-template>
+          </div>
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-raised-button color="primary" (click)="goBack()">
