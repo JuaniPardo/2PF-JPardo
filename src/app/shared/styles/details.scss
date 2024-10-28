@@ -19,7 +19,7 @@
 .not-found-card,
 .course-card,
 .class-card {
-  max-width: 600px;
+  max-width: 900px;
   width: 100%;
 }
 
@@ -51,6 +51,7 @@ mat-card-actions {
   display: flex;
   justify-content: space-between;
   padding: 16px;
+  gap: 16px;
 }
 
 mat-card-header {

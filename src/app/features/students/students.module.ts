@@ -46,7 +46,7 @@ import {MatListModule} from "@angular/material/list";
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
-    MatListModule
+    MatListModule,
   ],
 })
 export class StudentsModule {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Course} from "../models/course";
 import {delay, Observable, of, throwError} from "rxjs";
-import {getMaxId, rndTime} from "../../shared/utils";
+import {getNextId, rndTime} from "../../shared/utils";
 
 let COURSES_DB: Course[] = [
   {
@@ -73,11 +73,10 @@ export class CourseService {
   }
 
   addCourse(result: Course): Observable<Course[]> {
-    const maxId = getMaxId(COURSES_DB);
     const newCourse: Course = {
       ...result,
       isActive: true,
-      id: maxId + 1,
+      id: getNextId(COURSES_DB),
       createdAt: new Date(),
       updatedAt: new Date()
     };

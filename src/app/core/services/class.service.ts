@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {delay, Observable, of, throwError} from "rxjs";
 import {Class} from "../models/class";
-import {getMaxId, rndTime} from "../../shared/utils";
+import {getNextId, rndTime} from "../../shared/utils";
 
 let CLASSES_DB: Class[] = [
   {
@@ -100,11 +100,10 @@ export class ClassService {
   }
 
   addClass(result: Class): Observable<Class[]> {
-    const maxId = getMaxId(CLASSES_DB);
     const newClass: Class = {
       ...result,
       isActive: true,
-      id: maxId + 1,
+      id: getNextId(CLASSES_DB),
       createdAt: new Date(),
       updatedAt: new Date()
     };

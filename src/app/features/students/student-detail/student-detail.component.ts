@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {Student} from "../../../core/models/student";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StudentsService} from "../../../core/services/student.service";
+import {MatDialog} from "@angular/material/dialog";
+import {EnrollmentFormComponent} from "../../enrollments/enrollment-form/enrollment-form.component";
 
 @Component({
   selector: 'app-student-detail',
@@ -16,7 +18,8 @@ export class StudentDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private studentsService: StudentsService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
   }
 
@@ -45,5 +48,16 @@ export class StudentDetailComponent {
   goBack(): void {
     // Redireccionar al listado de estudiantes.
     this.router.navigate(['/students']).then();
+  }
+
+  openEnrollmentForm(): void {
+    const dialogRef = this.dialog.open(EnrollmentFormComponent, {
+      data: {studentId: this.studentID},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Cerrado');
+      }
+    });
   }
 }

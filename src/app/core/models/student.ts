@@ -1,3 +1,5 @@
+import {Enrollment} from "./enrollment";
+
 export interface Student {
   id: number;
   firstName: string;
@@ -6,5 +8,6 @@ export interface Student {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  enrollments?: Enrollment[];
 }
 

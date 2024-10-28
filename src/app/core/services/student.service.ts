@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {delay, Observable, of, throwError} from "rxjs";
 import {Student} from "../models/student";
-import {rndTime} from "../../shared/utils";
+import {getNextId, rndTime} from "../../shared/utils";
 
 let STUDENTS_DB: Student[] = [
   {
@@ -128,11 +128,10 @@ export class StudentsService {
   }
 
   addStudent(result: Student): Observable<Student[]> {
-    const maxId = STUDENTS_DB.reduce((acc, curr) => Math.max(acc, curr.id), 0);
     const newStudent: Student = {
       ...result,
       isActive: true,
-      id: maxId + 1,
+      id: getNextId(STUDENTS_DB),
       createdAt: new Date(),
       updatedAt: new Date()
     };

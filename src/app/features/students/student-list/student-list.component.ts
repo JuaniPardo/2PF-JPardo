@@ -79,7 +79,7 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   openDialog(s: Student | null): void {
     const dialogRef = this.dialog.open(StudentFormComponent, {
       data: s || null,
-      width: '500px',
+      width: '800px',
       disableClose: false
     });
     dialogRef.afterClosed().subscribe({
