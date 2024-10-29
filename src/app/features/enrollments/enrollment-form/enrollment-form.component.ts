@@ -74,11 +74,12 @@ export class EnrollmentFormComponent implements OnInit {
     } else {
       const enrollment: Omit<Enrollment, 'id' | 'enrollmentDate' | 'updatedAt' | 'isActive'> = {
         studentId: this.data.studentId,
-        courseId: this.enrollmentForm.value.courseId,
+        courseId: this.enrollmentForm.value.courseId!,
       };
       this.enrollmentService.enrollStudent(enrollment).subscribe({
         next: () => {
           this.dialogRef.close(true);
+          console.log(enrollment);
         },
         error: (err) => {
           console.error(err, 'Error al agregar alumno');

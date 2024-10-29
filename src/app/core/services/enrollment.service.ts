@@ -67,13 +67,16 @@ export class EnrollmentService {
       return throwError(() => new Error('Alumno ya está inscrito en el curso'));
     }
     const newEnrollment: Enrollment = {
-      ...enrollment,
-      id: getNextId(ENROLLMENTS_DB) + 1, // TODO Llamar a la función getNextID() y poner el +1 dentro de la f.
+      id: getNextId(ENROLLMENTS_DB) + 1,
+      courseId: enrollment.courseId,
+      studentId: enrollment.studentId,
       isActive: true,
       enrollmentDate: new Date(),
       updatedAt: new Date()
     };
     ENROLLMENTS_DB = [...ENROLLMENTS_DB, newEnrollment];
+    console.table(newEnrollment);
+    console.table(ENROLLMENTS_DB);
     return of(ENROLLMENTS_DB).pipe(delay(rndTime(.7)));
   }
 

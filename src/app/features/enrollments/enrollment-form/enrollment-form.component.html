@@ -12,8 +12,8 @@
         [required]="true"
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCourse">
-        @for (course of filteredCourses | async; track course.id) {
-          <mat-option [value]="course" >{{ course.name }}</mat-option>
+        @for (course of filteredCourses | async; track course) {
+          <mat-option [value]="course.id">{{ course.name }}</mat-option>
         }
       </mat-autocomplete>
       @if (enrollmentForm.get('courseId')?.invalid) {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Student} from "../../../core/models/student";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StudentsService} from "../../../core/services/student.service";
@@ -13,7 +13,7 @@ import {CourseService} from "../../../core/services/course.service";
   templateUrl: './student-detail.component.html',
   styleUrls: ['./student-detail.component.scss', '../../../shared/styles/details.scss'],
 })
-export class StudentDetailComponent implements OnInit {
+export class StudentDetailComponent implements OnInit, AfterViewInit {
   studentID!: number;
   student!: Student;
   enrollments!: EnrollmentDisplay[];
@@ -34,8 +34,11 @@ export class StudentDetailComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.studentID = +params['id']; // uso el '+' para parsear
       this.loadStudent();
-      this.loadEnrollments();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.loadEnrollments();
   }
 
   private loadStudent(): void {
@@ -63,7 +66,7 @@ export class StudentDetailComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Cerrado');
+        this.loadEnrollments();
       }
     });
   }
@@ -76,6 +79,8 @@ export class StudentDetailComponent implements OnInit {
             this.enrollments = enrollments.map((enrollment) => {
               const course = courses.find((c) => c.id === enrollment.courseId);
               return {
+                courseId: enrollment.courseId,
+                studentId: this.student.id,
                 courseName: course
                   ? course.name
                   : 'Curso no encontrado',
@@ -97,6 +102,7 @@ export class StudentDetailComponent implements OnInit {
 }
 
 interface EnrollmentDisplay {
+  courseId: number;
   courseName: string;
   enrollmentDate: Date;
 }
