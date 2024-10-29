@@ -1,11 +1,14 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
 import {Student} from "../../../core/models/student";
+import {StudentsService} from "../../../core/services/student.service";
+import {StudentFormComponent} from "../student-form/student-form.component";
+import {ConfirmDialogComponent} from "../../../shared/components/confirm-dialog/confirm-dialog.component";
+
+
+import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {StudentsService} from "../../../core/services/student.service";
 import {MatDialog} from "@angular/material/dialog";
-import {StudentFormComponent} from "../student-form/student-form.component";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
@@ -19,12 +22,6 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>;
   isLoading: boolean = false;
   showInactive: boolean = false;
-
-  user = {
-    firstName: 'Juan',
-    lastName: 'Pardo',
-    role: 'admin',
-  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -137,5 +134,20 @@ export class StudentListComponent implements OnInit, AfterViewInit {
   toggleInactive($event: MatSlideToggleChange) {
     this.showInactive = $event.checked;
     this.loadStudents();
+  }
+
+  openConfirmationDialog(row: {id: number}): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Eliminar alumno',
+        message: 'Esta acción no se puede deshacer.\n¿Está seguro de que desea eliminar alumno?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteStudent(row);
+      }
+    });
   }
 }

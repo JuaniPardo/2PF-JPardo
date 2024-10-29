@@ -9,7 +9,11 @@
       <button mat-raised-button class="demo-button" (click)="openDialog(null)">
         Agregar Alumno
       </button>
-      <mat-slide-toggle disabled="true" labelPosition="before" (change)="toggleInactive($event)">
+      <mat-slide-toggle
+        [checked]="showInactive"
+        disabled="true"
+        labelPosition="before"
+        (change)="toggleInactive($event)">
         <span>Ver usuarios inactivos </span></mat-slide-toggle>
     </div>
 
@@ -54,7 +58,7 @@
               <button mat-icon-button class="edit-icon" aria-label="Edit button" (click)="openDialog(row)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button class="delete-icon" aria-label="Delete button" (click)="deleteStudent(row)">
+              <button mat-icon-button class="delete-icon" aria-label="Delete button" (click)="openConfirmationDialog(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
