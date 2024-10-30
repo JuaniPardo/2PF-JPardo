@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "2PF-JPardo": {
+    "3PF-JPardo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "2PF-JPardo:build:production"
+              "buildTarget": "3PF-JPardo:build:production"
             },
             "development": {
-              "buildTarget": "2PF-JPardo:build:development"
+              "buildTarget": "3PF-JPardo:build:development"
             }
           },
           "defaultConfiguration": "development"
